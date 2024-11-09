@@ -1,0 +1,307 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: GesPyme Employee service API
+  description: Api Documentation of GesPyme project employee microservice
+  contact:
+    name: Sara Molina
+    email: sara.molina.delgado@gmail.com
+  license:
+    name: Creative Commons Attribution-NonCommercial-NoDerivs 3.0
+    url: https://creativecommons.org/licenses/by-nc-nd/3.0/
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: employee-controller
+    description: CRUD operations for employees
+paths:
+  /employee:
+    post:
+      tags:
+        - employee-controller
+      summary: Create employee 
+      description: Operation to create the employee with the id provided
+      operationId: createEmployee
+      security:
+        - bearerAuth: [] 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeModelApi'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+    delete:
+      tags:
+        - employee-controller
+      summary: Delete employee 
+      description: Operation to delete the employee with the id provided
+      operationId: deleteEmployee
+      security:
+        - bearerAuth: [] 
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+    patch:
+      tags:
+        - employee-controller
+      summary: Merge employee providing new attributes
+      description: Operation to merge the existing information about an employee with the new attributes specified
+      operationId: mergeEmployee
+      security:
+        - bearerAuth: [] 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeModelApi'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+    get:
+      tags:
+        - employee-controller
+      summary: Find employee by criteria
+      description: A list of employees is returned based on provided criteria
+      operationId: findEmployees
+      security:
+        - bearerAuth: [] 
+      parameters:
+        - name: email
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: lastName
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: address
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: mobilePhone
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: socialSecurityNumber
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: idNumber
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Resource correctly obtained
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeModelApi'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+  /employee/{employeeId}:
+    get:
+      tags:
+        - employee-controller
+      summary: Get employee providing employeeId
+      description: Operation to retrieve Employee entity providing an employee id
+      operationId: getEmployeeById
+      security:
+        - bearerAuth: [] 
+      parameters:
+        - name: employeeId
+          in: path
+          required: true
+          description: The ID of the employee to be retrieved
+          schema:
+            type: string 
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                 $ref: '#/components/schemas/EmployeeModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+components:
+  schemas:
+    EmployeeModelApi:
+      title: EmployeeModelApi
+      required:
+        - employeeId
+      type: object
+      properties:
+        employeeId:
+          type: string
+        email:
+          type: string
+        name:
+          type: string
+        lastName:
+          type: string
+        address:
+          type: string
+        mobilePhone:
+          type: string
+        socialSecurityNumber:
+          type: string
+        idNumber:
+          type: string
+    ErrorModelApi:
+      title: ErrorModelApi
+      required:
+        - code
+        - description
+      type: object
+      properties:
+        code:
+          type: string
+        description:
+          type: string 
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

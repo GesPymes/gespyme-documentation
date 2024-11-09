@@ -1,0 +1,301 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: GesPyme Customer service API
+  description: Api Documentation of GesPyme project customer microservice
+  contact:
+    name: Sara Molina
+    email: sara.molina.delgado@gmail.com
+  license:
+    name: Creative Commons Attribution-NonCommercial-NoDerivs 3.0
+    url: https://creativecommons.org/licenses/by-nc-nd/3.0/
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: customer-controller
+    description: CRUD operations for customer
+paths:
+  /customer/{customerId}:
+    get:
+      tags:
+        - customer-controller
+      summary: Get customer providing customerId
+      description: Operation to retrieve Customer entity providing a customer id
+      operationId: getCustomerById
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          description: The ID of the customer to be retrieved
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+    delete:
+      tags:
+        - customer-controller
+      summary: Delete customer
+      description: Operation to delete the customer with the id provided
+      operationId: deleteCustomer
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          description: The ID of the customer to be retrieved
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+  /customer:
+    get:
+      tags:
+        - customer-controller
+      summary: Find customer by criteria
+      description: A list of customer is returned based on provided criteria
+      operationId: findCustomer
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: lastName
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: address
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: email
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: mobilePhone
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: needsInvoice
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type : array
+                items:
+                  $ref: '#/components/schemas/CustomerModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+    post:
+      tags:
+        - customer-controller
+      summary: Create customer
+      description: Operation to create the customer with the id provided
+      operationId: createCustomer
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerModelApi'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+    patch:
+      tags:
+        - customer-controller
+      summary: Merge customer providing new attributes
+      description: Operation to merge the existing information about a customer with the new attributes specified
+      operationId: mergeCustomer
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerModelApi'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+components:
+  schemas:
+    CustomerModelApi:
+      title: CustomerModelApi
+      required:
+        - customerId
+        - name
+        - lastName
+        - address
+        - email
+        - mobilePhone
+        - needsInvoice
+      type: object
+      properties:
+        customerId:
+          type: string
+        name:
+          type: string
+        lastName:
+          type: string
+        address:
+          type: string
+        email:
+          type: string
+        mobilePhone:
+          type: string
+        needsInvoice:
+          type: boolean
+    ErrorModelApi:
+      title: ErrorModelApi
+      required:
+        - code
+        - description
+      type: object
+      properties:
+        code:
+          type: string
+        description:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

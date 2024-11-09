@@ -1,0 +1,508 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: GesPyme Invoice service API
+  description: Api Documentation of GesPyme project invoice microservice
+  contact:
+    name: Sara Molina
+    email: sara.molina.delgado@gmail.com
+  license:
+    name: Creative Commons Attribution-NonCommercial-NoDerivs 3.0
+    url: https://creativecommons.org/licenses/by-nc-nd/3.0/
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: invoice-data-controller
+    description: CRUD operations for invoice data
+  - name: invoice-order-controller
+    description: CRUD operations for invoice orders
+
+paths:
+  /invoice-info/{invoiceDataId}:
+    get:
+      tags:
+        - invoice-data-controller
+      summary: Get invoice data providing invoiceId
+      description: Operation to retrieve Invoice data entity providing a invoice data id
+      operationId: getInvoiceDataById
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: invoiceDataId
+          in: path
+          required: true
+          description: The ID of the invoice to be retrieved
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceDataModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+    delete:
+      tags:
+        - invoice-data-controller
+      summary: Delete job
+      description: Operation to delete the invoice data with the id provided
+      operationId: deleteInvoiceData
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: invoiceDataId
+          in: path
+          required: true
+          description: The ID of the invoice data to be retrieved
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+  /invoice-data:
+    get:
+      tags:
+        - invoice-data-controller
+      summary: Find invoice data by criteria
+      description: A list of invoice data is returned based on provided criteria
+      operationId: findInvoice
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: subtotalAmount
+          in: query
+          required: false
+          schema:
+            type: number
+        - name: taxRate
+          in: query
+          required: false
+          schema:
+            type: number
+        - name: totalAmount
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InvoiceDataModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+    post:
+      tags:
+        - invoice-data-controller
+      summary: Create invoice data
+      description: Operation to create the invoice data with the id provided
+      operationId: createInvoiceData
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceDataModelApi'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceDataModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+    patch:
+      tags:
+        - invoice-data-controller
+      summary: Merge invoice data providing new attributes
+      description: Operation to merge the existing information about a invoice data with the new attributes specified
+      operationId: mergeInvoiceData
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceDataModelApi'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceDataModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+  /invoice-info/{invoiceDataId}/invoice-oder/{invoiceOrderId}:
+    get:
+      tags:
+        - invoice-order-controller
+      summary: Get appointment providing invoiceOrderId
+      description: Operation to retrieve appointment entity providing a invoice order id
+      operationId: getInvoiceOrderById
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: invoiceDataId
+          in: path
+          required: true
+          description: The ID of the invoice data to be retrieved
+          schema:
+            type: string
+        - name: invoiceOrderId
+          in: path
+          required: true
+          description: The ID of the invoice order to be retrieved
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceOrderModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+    delete:
+      tags:
+        - invoice-order-controller
+      summary: Delete invoice order
+      description: Operation to delete the invoice order with the id provided
+      operationId: deleteInvoiceOrder
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: invoiceDataId
+          in: path
+          required: true
+          description: The ID of the invoice data to be retrieved
+          schema:
+            type: string
+        - name: invoiceOrderId
+          in: path
+          required: true
+          description: The ID of the invoice order to be retrieved
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+  /invoice-data/{invoiceDataId}/invoice-order:
+    post:
+      tags:
+        - invoice-order-controller
+      summary: Create invoice order
+      description: Operation to create the invoice order with the id provided
+      operationId: createInvoiceOrder
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: invoiceDataId
+          in: path
+          required: true
+          description: The ID of the invoice data to be retrieved
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceOrderModelApi'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceOrderModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+    patch:
+      tags:
+        - invoice-order-controller
+      summary: Merge  invoice order providing new attributes
+      description: Operation to merge the existing information about a  invoice order with the new attributes specified
+      operationId: mergeInvoiceOrder
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: invoiceDataId
+          in: path
+          required: true
+          description: The ID of the invoice data to be retrieved
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceOrderModelApi'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceOrderModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+components:
+  schemas:
+    InvoiceDataModelApi:
+      title: InvoiceDataModelApi
+      required:
+        - invoiceDataId
+        - appointmentId
+        - subtotalAmount
+        - taxRate
+        - totalAmount
+      type: object
+      properties:
+        invoiceDataId:
+          type: string
+        appointmentId:
+          type: string
+        subtotalAmount:
+          type: number
+        taxRate:
+          type: number
+        totalAmount:
+          type: number
+    InvoiceOrderModelApi:
+      title: InvoiceOrderModelApi
+      required:
+        - invoiceDataId
+        - invoiceOrderId
+        - status
+      type: object
+      properties:
+        invoiceDataId:
+          type: string
+        invoiceOrderId:
+          type: string
+        status:
+          type: string
+          enum:
+            - CREATED
+            - DELETED
+            - SIGNED
+            - APPROVED
+            - SENT
+    ErrorModelApi:
+      title: ErrorModelApi
+      required:
+        - code
+        - description
+      type: object
+      properties:
+        code:
+          type: string
+        description:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

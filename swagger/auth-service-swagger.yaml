@@ -1,0 +1,396 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: GesPyme Auth service API
+  description: Api Documentation of GesPyme project user microservice
+  contact:
+    name: Sara Molina
+    email: sara.molina.delgado@gmail.com
+  license:
+    name: Creative Commons Attribution-NonCommercial-NoDerivs 3.0
+    url: https://creativecommons.org/licenses/by-nc-nd/3.0/
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: auth-controller
+    description: CRUD operations for user authorization
+  - name: user-controller
+    description: CRUD operations for User entity management
+paths:
+  /user/{userId}:
+    get:
+      tags:
+        - user-controller
+      summary: Get user providing userId
+      description: Operation to retrieve User entity providing a user id
+      operationId: getUserById
+      security:
+        - bearerAuth: [] 
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: The ID of the user to be retrieved
+          schema:
+            type: string 
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+    delete:
+      tags:
+        - user-controller
+      summary: Delete user 
+      description: Operation to delete the user with the id provided
+      operationId: deleteUser
+      security:
+        - bearerAuth: [] 
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: The ID of the user to be retrieved
+          schema:
+            type: string 
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+  /user/{email}:      
+    get:
+      tags:
+        - user-controller
+      summary: Get user providing email
+      description: Operation to retrieve User entity providing a user email
+      operationId: getUserByEmail
+      security:
+        - bearerAuth: [] 
+      parameters:
+        - name: email
+          in: path
+          required: true
+          description: The email of the user to be retrieved
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+  /user:
+    post:
+      tags:
+        - user-controller
+      summary: Create user 
+      description: Operation to create the user with the id provided
+      operationId: createUser
+      security:
+        - bearerAuth: [] 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserModelApi'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+    patch:
+      tags:
+        - user-controller
+      summary: Merge user providing new attributes
+      description: Operation to merge the existing information about a user with the new attributes specified
+      operationId: mergeUser
+      security:
+        - bearerAuth: [] 
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserModelApi'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+  /auth:
+    post:
+      tags:
+        - auth-controller
+      summary: Get token
+      description: Operation to retrieve Token by providing a valid user email and password
+      operationId: getToken
+      requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserModelApi'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+  /auth/validate:
+    post:
+      tags:
+        - auth-controller
+      summary: Validate token
+      description: Operation to validate Token by providing a valid user email and token in header
+      operationId: validateToken
+      parameters:
+        - name: email
+          in: query
+          required: false
+          schema:
+            type: string
+      security:
+        - bearerAuth: [] 
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+components:
+  schemas:
+    UserModelApi:
+      title: UserModelApi
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        userId:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        name:
+          type: string
+        role:
+          type: string
+          enum:
+            - ADMIN
+            - SYSTEM
+            - EMPLOYEE
+    TokenResponse:
+      title: TokenResponse
+      type: object
+      properties:
+        token:
+          type: string
+        isValid:
+          type: boolean
+        userId:
+          type: string
+        email:
+          type: string
+        lastTimeLoggedIn:
+          type: string
+          format: date-time
+        creationDate:
+          type: string
+          format: date-time
+        lastModificationDate:
+          type: string
+          format: date-time
+        role:
+          type: string
+          enum:
+            - ADMIN
+            - SYSTEM
+            - EMPLOYEE
+    ErrorModelApi:
+      title: ErrorModelApi
+      required:
+        - code
+        - description
+      type: object
+      properties:
+        code:
+          type: string
+        description:
+          type: string 
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

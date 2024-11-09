@@ -1,0 +1,231 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: GesPyme Payment service API
+  description: Api Documentation of GesPyme project payment microservice
+  contact:
+    name: Sara Molina
+    email: sara.molina.delgado@gmail.com
+  license:
+    name: Creative Commons Attribution-NonCommercial-NoDerivs 3.0
+    url: https://creativecommons.org/licenses/by-nc-nd/3.0/
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: payment-controller
+    description: CRUD operations for payments
+paths:
+  /payment/{paymentId}:
+    get:
+      tags:
+        - payment-controller
+      summary: Get payment providing paymentId
+      description: Operation to retrieve Payment entity providing a paymenteId
+      operationId: getPaymentById
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: paymentId
+          in: path
+          required: true
+          description: The ID of the payment to be retrieved
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+  /payment:
+    post:
+      tags:
+        - payment-controller
+      summary: Create payment
+      description: Operation to create the payment with the id provided
+      operationId: createPayment
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentModelApi'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+    patch:
+      tags:
+        - payment-controller
+      summary: Merge payment providing new attributes
+      description: Operation to merge the existing information about a payment with the new attributes specified
+      operationId: mergePayment
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentModelApi'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+    get:
+      tags:
+        - payment-controller
+      summary: Find payment by criteria
+      description: A list of payments is returned based on provided criteria
+      operationId: findPayments
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: status
+          in: query
+          required: true
+          description: payment status PENDING
+          schema:
+            type: string
+            enum:
+              - PENDING_PAYMENT
+              - PAID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PaymentModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+components:
+  schemas:
+    PaymentModelApi:
+      title: PaymentModelApi
+      required:
+        - status
+      type: object
+      properties:
+        paymentId:
+          type: string
+        status:
+          type: string
+          enum:
+            - PENDING_PAYMENT
+            - PAID
+    ErrorModelApi:
+      title: ErrorModelApi
+      required:
+        - code
+        - description
+      type: object
+      properties:
+        code:
+          type: string
+        description:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
