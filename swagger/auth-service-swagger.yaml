@@ -351,6 +351,15 @@ components:
             - ADMIN
             - SYSTEM
             - EMPLOYEE
+        lastTimeLoggedIn:
+          type: string
+          format: date-time
+        creationDate:
+          type: string
+          format: date-time
+        lastModificationDate:
+          type: string
+          format: date-time
     TokenResponse:
       title: TokenResponse
       type: object
@@ -363,15 +372,6 @@ components:
           type: string
         email:
           type: string
-        lastTimeLoggedIn:
-          type: string
-          format: date-time
-        creationDate:
-          type: string
-          format: date-time
-        lastModificationDate:
-          type: string
-          format: date-time
         role:
           type: string
           enum:

@@ -388,6 +388,12 @@ paths:
           schema:
             type: string
             format: date-time
+        - name: isPeriodic
+          in: query
+          required: false
+          schema:
+            type: boolean
+            format: date-time
         - name: status
           in: query
           required: false
@@ -771,6 +777,10 @@ components:
           type: number
         description:
           type: string
+        calendarIds:
+          type: array
+          items:
+            type: string
     CalendarModelApi:
       title: CalendarModelApi
       required:
@@ -802,6 +812,8 @@ components:
         endDateTime:
           type: string
           format: date-time
+        isPeriodic:
+          type: boolean
         status:
           type: string
           enum:

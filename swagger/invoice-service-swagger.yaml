@@ -16,7 +16,8 @@ tags:
     description: CRUD operations for invoice data
   - name: invoice-order-controller
     description: CRUD operations for invoice orders
-
+  - name: invoice-manager-controller
+    description: Operations to manage invoices
 paths:
   /invoice-info/{invoiceDataId}:
     get:
@@ -424,6 +425,92 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InvoiceOrderModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+  /invoice-manager/sign-invoce/{invoiceOrderId}:
+    get:
+      tags:
+        - invoice-manager-controller
+      summary: Sign an invoice
+      description: Operation to sign an invoice using the uploaded certificate
+      operationId: singInvoice
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: invoiceOrderId
+          in: path
+          required: true
+          description: The ID of the invoice order to be igned
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+  /invoice-manager/send-invoce/{invoiceOrderId}:
+    get:
+      tags:
+        - invoice-manager-controller
+      summary: Send an invoice
+      description: Operation to end invoice using the uploaded certificate
+      operationId: sendInvoice
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: invoiceOrderId
+          in: path
+          required: true
+          description: The ID of the invoice order to be igned
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
         '401':
           description: Unauthorized
           content:
