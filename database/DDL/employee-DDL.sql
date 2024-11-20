@@ -3,19 +3,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema employee_database
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema employee_database
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `employee_database` DEFAULT CHARACTER SET utf8 ;
+USE `employee_database` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`AUTH_INFO`
+-- Table `employee_database`.`auth_info`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`AUTH_INFO` (
+CREATE TABLE IF NOT EXISTS `employee_database`.`auth_info` (
   `user_id` VARCHAR(45) NOT NULL,
   `token` VARCHAR(225) NOT NULL,
   `is_valid` INT NOT NULL,
@@ -29,9 +29,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`USER`
+-- Table `employee_database`.`user`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`USER` (
+CREATE TABLE IF NOT EXISTS `employee_database`.`user` (
   `user_id` VARCHAR(45) NOT NULL,
   `password` VARCHAR(100) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
@@ -39,25 +39,26 @@ CREATE TABLE IF NOT EXISTS `mydb`.`USER` (
   `role` VARCHAR(45) NOT NULL,
   `auth_info` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`user_id`),
-  INDEX `fk_USER_AUTH_INFO_idx` (`auth_info` ASC) VISIBLE,
-  CONSTRAINT `fk_USER_AUTH_INFO`
+  INDEX `fk_user_auth_info_idx` (`auth_info` ASC) VISIBLE,
+  CONSTRAINT `fk_user_auth_info`
     FOREIGN KEY (`auth_info`)
-    REFERENCES `mydb`.`AUTH_INFO` (`user_id`)
+    REFERENCES `employee_database`.`auth_info` (`user_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE USER 'admin' IDENTIFIED BY 'admin-gespyme-2024-99Pabcde';
+CREATE user 'admin' IDENTIFIED BY 'admin-gespyme-2024-99Pabcde';
+GRANT ALL PRIVILEGES ON employee_database.* TO 'admin'@'%';
 
-GRANT ALL ON `mydb`.* TO 'admin';
-CREATE USER 'reader' IDENTIFIED BY 'reader-gespyme-2024-99Qabcde';
+CREATE user 'reader' IDENTIFIED BY 'reader-gespyme-2024-99Qabcde';
+GRANT SELECT ON TABLE `employee_database`.* TO 'reader'@'%';
 
-GRANT SELECT ON TABLE `mydb`.* TO 'reader';
-CREATE USER 'employee' IDENTIFIED BY 'employee-gespyme-2024-99Qabcde';
+GRANT SELECT ON TABLE `employee_database`.* TO 'reader';
+CREATE user 'employee' IDENTIFIED BY 'employee-gespyme-2024-99Qabcde';
 
-GRANT SELECT, INSERT, TRIGGER ON TABLE `mydb`.* TO 'employee';
-GRANT SELECT ON TABLE `mydb`.* TO 'employee';
-GRANT SELECT, INSERT, TRIGGER, UPDATE, DELETE ON TABLE `mydb`.* TO 'employee';
+GRANT SELECT, INSERT, TRIGGER ON TABLE `employee_database`.* TO 'employee';
+GRANT SELECT ON TABLE `employee_database`.* TO 'employee';
+GRANT SELECT, INSERT, TRIGGER, UPDATE, DELETE ON TABLE `employee_database`.* TO 'employee';
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

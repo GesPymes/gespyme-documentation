@@ -3,19 +3,19 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema payment_database
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema payment_database
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `payment_database` DEFAULT CHARACTER SET utf8 ;
+USE `payment_database` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`PAYMENT`
+-- Table `payment_database`.`payment`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`PAYMENT` (
+CREATE TABLE IF NOT EXISTS `payment_database`.`payment` (
   `payment_id` INT NOT NULL,
   `appointment_id` VARCHAR(50) NOT NULL,
   `status` VARCHAR(50) NOT NULL,
@@ -23,11 +23,10 @@ CREATE TABLE IF NOT EXISTS `mydb`.`PAYMENT` (
 ENGINE = InnoDB;
 
 CREATE USER 'admin' IDENTIFIED BY 'admin-gespyme-2024-99Pabcde';
+GRANT ALL PRIVILEGES ON payment_database.* TO 'admin'@'%';
 
-GRANT ALL ON `mydb`.* TO 'admin';
 CREATE USER 'reader' IDENTIFIED BY 'admin-gespyme-2024-99Qabcde';
-
-GRANT SELECT ON TABLE `mydb`.* TO 'reader';
+GRANT SELECT ON TABLE `payment_database`.* TO 'reader'@'%';
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
