@@ -19,7 +19,7 @@ tags:
   - name: invoice-manager-controller
     description: Operations to manage invoices
 paths:
-  /invoice-info/{invoiceDataId}:
+  /invoiceData/{invoiceDataId}:
     get:
       tags:
         - invoice-data-controller
@@ -108,7 +108,59 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorModelApi'
-  /invoice-data:
+    patch:
+      tags:
+        - invoice-data-controller
+      summary: Merge invoice data providing new attributes
+      description: Operation to merge the existing information about a invoice data with the new attributes specified
+      operationId: mergeInvoiceData
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: invoiceDataId
+          in: path
+          required: true
+          description: The ID of the invoice data to be retrieved
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceDataModelApi'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceDataModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+  /invoiceData:
     get:
       tags:
         - invoice-data-controller
@@ -204,52 +256,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorModelApi'
-    patch:
-      tags:
-        - invoice-data-controller
-      summary: Merge invoice data providing new attributes
-      description: Operation to merge the existing information about a invoice data with the new attributes specified
-      operationId: mergeInvoiceData
-      security:
-        - bearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/InvoiceDataModelApi'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InvoiceDataModelApi'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-  /invoice-info/{invoiceDataId}/invoice-oder/{invoiceOrderId}:
+
+  /invoiceData/{invoiceDataId}/invoiceOder/{invoiceOrderId}:
     get:
       tags:
         - invoice-order-controller
@@ -350,7 +358,65 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorModelApi'
-  /invoice-data/{invoiceDataId}/invoice-order:
+    patch:
+      tags:
+        - invoice-order-controller
+      summary: Merge  invoice order providing new attributes
+      description: Operation to merge the existing information about a  invoice order with the new attributes specified
+      operationId: mergeInvoiceOrder
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: invoiceDataId
+          in: path
+          required: true
+          description: The ID of the invoice data to be retrieved
+          schema:
+            type: string
+        - name: invoiceOrderId
+          in: path
+          required: true
+          description: The ID of the invoice order to be retrieved
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceOrderModelApi'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoiceOrderModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+  /invoiceData/{invoiceDataId}/invoiceOrder:
     post:
       tags:
         - invoice-order-controller
@@ -397,59 +463,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorModelApi'
-    patch:
-      tags:
-        - invoice-order-controller
-      summary: Merge  invoice order providing new attributes
-      description: Operation to merge the existing information about a  invoice order with the new attributes specified
-      operationId: mergeInvoiceOrder
-      security:
-        - bearerAuth: []
-      parameters:
-        - name: invoiceDataId
-          in: path
-          required: true
-          description: The ID of the invoice data to be retrieved
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/InvoiceOrderModelApi'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InvoiceOrderModelApi'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-  /invoice-manager/sign-invoce/{invoiceOrderId}:
+
+  /invoiceData/{invoice_data_id}/invoiceOrder/{invoice_order_id}/sign:
     get:
       tags:
         - invoice-manager-controller
@@ -459,10 +474,16 @@ paths:
       security:
         - bearerAuth: []
       parameters:
+        - name: invoiceDataId
+          in: path
+          required: true
+          description: The ID of the invoice data to be retrieved
+          schema:
+            type: string
         - name: invoiceOrderId
           in: path
           required: true
-          description: The ID of the invoice order to be igned
+          description: The ID of the invoice order to be retrieved
           schema:
             type: string
       responses:
@@ -492,25 +513,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorModelApi'
-  /invoice-manager/send-invoce/{invoiceOrderId}:
+  /invoiceData/{invoice_data_id}/invoiceOrder/Invoice-{invoice_order_id}-signed.pdf/download:
     get:
       tags:
         - invoice-manager-controller
       summary: Send an invoice
-      description: Operation to end invoice using the uploaded certificate
+      description: Operation to download an invoice in pdf
       operationId: sendInvoice
       security:
         - bearerAuth: []
       parameters:
+        - name: invoiceDataId
+          in: path
+          required: true
+          description: The ID of the invoice data to be retrieved
+          schema:
+            type: string
         - name: invoiceOrderId
           in: path
           required: true
-          description: The ID of the invoice order to be igned
+          description: The ID of the invoice order to be retrieved
           schema:
             type: string
       responses:
-        '204':
-          description: No Content
+        '200':
+          description: Application PDF returned as InputStream
         '401':
           description: Unauthorized
           content:

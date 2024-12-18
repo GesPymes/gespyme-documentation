@@ -109,6 +109,58 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorModelApi'
+    patch:
+      tags:
+        - job-controller
+      summary: Merge job providing new attributes
+      description: Operation to merge the existing information about a job with the new attributes specified
+      operationId: mergeJob
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: jobId
+          in: path
+          required: true
+          description: The ID of the job to be retrieved
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JobModelApi'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
   /job:
     get:
       tags:
@@ -215,51 +267,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorModelApi'
-    patch:
-      tags:
-        - job-controller
-      summary: Merge job providing new attributes
-      description: Operation to merge the existing information about a job with the new attributes specified
-      operationId: mergeJob
-      security:
-        - bearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/JobModelApi'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/JobModelApi'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
+
   /job/{jobId}/appointment/{appointmentId}:
     get:
       tags:
@@ -337,6 +345,65 @@ paths:
       responses:
         '204':
           description: No Content
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+
+    patch:
+      tags:
+        - appointment-controller
+      summary: Merge appointment providing new attributes
+      description: Operation to merge the existing information about a appointment with the new attributes specified
+      operationId: mergeAppointment
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: jobId
+          in: path
+          required: true
+          description: The ID of the appointment to be retrieved
+          schema:
+            type: string
+        - name: appointmentId
+          in: path
+          required: true
+          description: The ID of the appointment to be retrieved
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AppointmentModelApi'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppointmentModelApi'
         '401':
           description: Unauthorized
           content:
@@ -476,58 +543,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorModelApi'
-    patch:
-      tags:
-        - appointment-controller
-      summary: Merge appointment providing new attributes
-      description: Operation to merge the existing information about a appointment with the new attributes specified
-      operationId: mergeAppointment
-      security:
-        - bearerAuth: []
-      parameters:
-        - name: jobId
-          in: path
-          required: true
-          description: The ID of the appointment to be retrieved
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/AppointmentModelApi'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AppointmentModelApi'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
+
 
   /calendar/{calendarId}:
     get:
@@ -594,6 +610,58 @@ paths:
       responses:
         '204':
           description: No Content
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+    patch:
+      tags:
+        - calendar-controller
+      summary: Merge calendar providing new attributes
+      description: Operation to merge the existing information about a calendar with the new attributes specified
+      operationId: mergeCalendar
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: calendarId
+          in: path
+          required: true
+          description: The ID of the calendar to be retrieved
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CalendarModelApi'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobModelApi'
         '401':
           description: Unauthorized
           content:
@@ -704,51 +772,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorModelApi'
-    patch:
-      tags:
-        - calendar-controller
-      summary: Merge calendar providing new attributes
-      description: Operation to merge the existing information about a calendar with the new attributes specified
-      operationId: mergeCalendar
-      security:
-        - bearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CalendarModelApi'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/JobModelApi'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
+
 components:
   schemas:
     JobModelApi:

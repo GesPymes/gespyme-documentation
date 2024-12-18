@@ -106,7 +106,60 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorModelApi'
-  /user/{email}:      
+    patch:
+      tags:
+        - user-controller
+      summary: Merge user providing new attributes
+      description: Operation to merge the existing information about a user with the new attributes specified
+      operationId: mergeUser
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: The ID of the user to be retrieved
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserModelApi'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+
+  /user/{email}:
     get:
       tags:
         - user-controller
@@ -193,52 +246,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorModelApi'
-    patch:
-      tags:
-        - user-controller
-      summary: Merge user providing new attributes
-      description: Operation to merge the existing information about a user with the new attributes specified
-      operationId: mergeUser
-      security:
-        - bearerAuth: [] 
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UserModelApi'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UserModelApi'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-  /auth:
+
+  /login:
     post:
       tags:
         - auth-controller
@@ -282,7 +291,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorModelApi'
-  /auth/validate:
+  /login/validate:
     post:
       tags:
         - auth-controller

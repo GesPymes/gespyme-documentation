@@ -104,6 +104,58 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorModelApi'
+    patch:
+      tags:
+        - customer-controller
+      summary: Merge customer providing new attributes
+      description: Operation to merge the existing information about a customer with the new attributes specified
+      operationId: mergeCustomer
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          description: The ID of the customer to be retrieved
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerModelApi'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
   /customer:
     get:
       tags:
@@ -210,51 +262,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorModelApi'
-    patch:
-      tags:
-        - customer-controller
-      summary: Merge customer providing new attributes
-      description: Operation to merge the existing information about a customer with the new attributes specified
-      operationId: mergeCustomer
-      security:
-        - bearerAuth: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CustomerModelApi'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CustomerModelApi'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
+
 components:
   schemas:
     CustomerModelApi:

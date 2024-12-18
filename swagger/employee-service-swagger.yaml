@@ -55,86 +55,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorModelApi'
-    delete:
-      tags:
-        - employee-controller
-      summary: Delete employee 
-      description: Operation to delete the employee with the id provided
-      operationId: deleteEmployee
-      security:
-        - bearerAuth: [] 
-      responses:
-        '204':
-          description: No Content
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-    patch:
-      tags:
-        - employee-controller
-      summary: Merge employee providing new attributes
-      description: Operation to merge the existing information about an employee with the new attributes specified
-      operationId: mergeEmployee
-      security:
-        - bearerAuth: [] 
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/EmployeeModelApi'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/EmployeeModelApi'
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
-        '500':
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorModelApi'
+
     get:
       tags:
         - employee-controller
@@ -241,6 +162,100 @@ paths:
                 type: array
                 items:
                  $ref: '#/components/schemas/EmployeeModelApi'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+    delete:
+      tags:
+        - employee-controller
+      summary: Delete employee
+      description: Operation to delete the employee with the id provided
+      operationId: deleteEmployee
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: employeeId
+          in: path
+          required: true
+          description: The ID of the employee to be retrieved
+          schema:
+            type: string
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorModelApi'
+    patch:
+      tags:
+        - employee-controller
+      summary: Merge employee providing new attributes
+      description: Operation to merge the existing information about an employee with the new attributes specified
+      operationId: mergeEmployee
+      security:
+        - bearerAuth: [ ]
+      parameters:
+        - name: employeeId
+          in: path
+          required: true
+          description: The ID of the employee to be retrieved
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmployeeModelApi'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeModelApi'
         '401':
           description: Unauthorized
           content:
