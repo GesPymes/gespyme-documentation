@@ -16,8 +16,6 @@ tags:
     description: CRUD operations for invoice data
   - name: invoice-order-controller
     description: CRUD operations for invoice orders
-  - name: invoice-manager-controller
-    description: Operations to manage invoices
 paths:
   /invoiceData/{invoiceDataId}:
     get:
@@ -467,7 +465,7 @@ paths:
   /invoiceData/{invoice_data_id}/invoiceOrder/{invoice_order_id}/sign:
     get:
       tags:
-        - invoice-manager-controller
+        - invoice-order-controller
       summary: Sign an invoice
       description: Operation to sign an invoice using the uploaded certificate
       operationId: singInvoice
@@ -516,10 +514,10 @@ paths:
   /invoiceData/{invoice_data_id}/invoiceOrder/Invoice-{invoice_order_id}-signed.pdf/download:
     get:
       tags:
-        - invoice-manager-controller
-      summary: Send an invoice
+        - invoice-order-controller
+      summary: Download an invoice
       description: Operation to download an invoice in pdf
-      operationId: sendInvoice
+      operationId: downloadInvoice
       security:
         - bearerAuth: []
       parameters:
